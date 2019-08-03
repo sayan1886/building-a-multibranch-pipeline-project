@@ -45,7 +45,9 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh '${scannerHome}/bin/sonar-scanner'
+                    withEnv(["JAVA_HOME=${ tool 'JDK_8.0' }", "PATH=${env.JAVA_HOME}/bin"]){
+                        sh '${scannerHome}/bin/sonar-scanner'
+                    }
                 }
                 timeout(time: 10, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
