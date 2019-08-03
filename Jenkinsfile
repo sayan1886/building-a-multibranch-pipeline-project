@@ -41,6 +41,8 @@ pipeline {
         }
         stage('Sonarqube Analysis') {
             environment {
+                env.JAVA_HOME = tool 'OpenJDK8'
+                env.PATH = 'env.JAVA_HOME/bin:${env.PATH}'
                 scannerHome = tool 'SonarQubeScanner'
             }
             steps {
